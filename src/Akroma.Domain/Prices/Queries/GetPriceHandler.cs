@@ -15,18 +15,30 @@ namespace Akroma.Domain.Prices.Queries
 
         public async Task<IEnumerable<Price>> HandleAsync(GetPrice query)
         {
-            var response = await HttpClient.GetStringAsync(new Uri("https://stocks.exchange/api2/ticker"));
-            var prices = JsonConvert.DeserializeObject<List<StocksPrice>>(response);
-            var aka = prices.FirstOrDefault(x => x.market_name == "AKA_BTC");
+            var stocks = await HttpClient.GetStringAsync(new Uri("https://stocks.exchange/api2/ticker"));
+            var stocksPrices = JsonConvert.DeserializeObject<List<StocksPrice>>(stocks);
+            var akaPrice = stocksPrices.FirstOrDefault(x => x.market_name == "AKA_BTC");
+
+            var coinmarketCap = await HttpClient.GetStringAsync(new Uri("https://api.coinmarketcap.com/v1/ticker/bitcoin/"));
+            var bitcoinPrices = JsonConvert.DeserializeObject<List<Coinmarketcap>>(coinmarketCap);
+            var bitcoin = bitcoinPrices.FirstOrDefault();
+
+            if (akaPrice == null || bitcoin == null)
+            {
+                return new List<Price>();
+            }
+
+            var usd = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.ask);
 
             return new List<Price>
             {
-                new Price()
+                new Price
                 {
                     Id = "akroma",
                     Name = "Akroma",
                     Symbol = "AKA",
-                    Value = decimal.Parse(aka.ask)
+                    Value = decimal.Parse(akaPrice.ask),
+                    Usd = usd.ToString("C")
                 }
             };
         }
@@ -47,5 +59,10 @@ namespace Akroma.Domain.Prices.Queries
         public string server_time { get; set; }
     }
 
-
+    public class Coinmarketcap
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public string price_usd { get; set; }
+    }
 }

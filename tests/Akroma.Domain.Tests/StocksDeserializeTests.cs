@@ -16,6 +16,8 @@ namespace Akroma.Domain.Tests
         {
             _console = console;
         }
+
+
         [Fact]
         public void CanDeserialize()
         {
@@ -24,7 +26,15 @@ namespace Akroma.Domain.Tests
             var prices = JsonConvert.DeserializeObject<List<StocksPrice>>(response);
             var first = prices.FirstOrDefault();
             _console.WriteLine(decimal.Parse(first.ask).ToString());
-            
+        }
+
+        [Fact]
+        public void PercentTest()
+        {
+            var btc = "10885.4";
+            var aka = "0.0000222";
+            var usd = decimal.Parse(btc) * decimal.Parse(aka);
+            _console.WriteLine(usd.ToString("C"));
         }
     }
 }
