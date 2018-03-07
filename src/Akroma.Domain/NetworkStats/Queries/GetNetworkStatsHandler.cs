@@ -40,15 +40,13 @@ namespace Akroma.Domain.NetworkStats.Queries
             var last = difficulty.Last();
             var th = ulong.Parse(last);
             var v = th * 0.000000000001;
-            var r = Math.Round((decimal)v, 2, MidpointRounding.AwayFromZero);
-            return $"{r} TH";
+            return v.ToString("F");
         }
 
         public string GetHashRate()
         {
             var v = avgHashrate * 0.000000001;
-            var r = Math.Round((decimal)v, 0, MidpointRounding.AwayFromZero);
-            return r > 1000 ? $"{r} TH/s" : $"{r} GH/s";
+            return v.ToString("F");
         }
     }
     public class Miner

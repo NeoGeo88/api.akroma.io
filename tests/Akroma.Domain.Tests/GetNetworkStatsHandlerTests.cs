@@ -34,8 +34,8 @@ namespace Akroma.Domain.Tests
             //_console.WriteLine(stats.ToString());
 
             stats.GetHeight().Should().Be(333586);
-            stats.GetDifficulty().Should().Be("1.79 TH");
-            stats.GetHashRate().Should().Be("135 GH/s");
+            stats.GetDifficulty().Should().Be("1.79");
+            stats.GetHashRate().Should().Be("135");
         }
     }
 }

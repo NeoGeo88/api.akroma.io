@@ -17,7 +17,7 @@ namespace Akroma.WebApi.Controllers
 
         [ProducesResponseType(typeof(Stats), 200)]
         [HttpGet]
-        [Route("details")]
+        [Route("network")]
         [ResponseCache(Duration = 600)]
         public async Task<Stats> Get()
         {
