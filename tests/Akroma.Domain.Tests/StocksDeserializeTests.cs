@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Akroma.Domain.Prices.Queries;
@@ -10,12 +9,12 @@ namespace Akroma.Domain.Tests
 {
     public class StocksDeserializeTests
     {
-        private readonly ITestOutputHelper _console;
-
         public StocksDeserializeTests(ITestOutputHelper console)
         {
             _console = console;
         }
+
+        private readonly ITestOutputHelper _console;
 
 
         [Fact]

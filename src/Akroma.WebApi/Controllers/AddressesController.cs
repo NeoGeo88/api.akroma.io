@@ -16,12 +16,13 @@ namespace Akroma.WebApi.Controllers
         }
 
         /// <summary>
-        /// List transactions
+        ///     List transactions
         /// </summary>
         /// <param name="address">The address to return [0x]ADDRESS</param>
         /// <param name="page"></param>
         [ProducesResponseType(typeof(Address), 200)]
-        [HttpGet, Route("addresses/{address}")]
+        [HttpGet]
+        [Route("addresses/{address}")]
         [ResponseCache(Duration = 30)]
         public async Task<Address> Get(string address, int page = 0)
         {
@@ -29,13 +30,14 @@ namespace Akroma.WebApi.Controllers
         }
 
         /// <summary>
-        /// List transactions
+        ///     List transactions
         /// </summary>
         /// <param name="address">The address to return [0x]ADDRESS</param>
         /// <param name="filter">all/to/from</param>
         /// <param name="page"></param>
         [ProducesResponseType(typeof(AddressTransactions), 200)]
-        [HttpGet, Route("addresses/{address}/transactions")]
+        [HttpGet]
+        [Route("addresses/{address}/transactions")]
         public async Task<AddressTransactions> GetTransactions(string address, string filter = "all", int page = 0)
         {
             return await _dispatcher.DispatchQueryAsync(new GetAddressTransactions(address, filter, page));

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Akroma.WebApi.Controllers
 {
-    public class PricesController
+    public class PricesController : Controller
     {
         private readonly IDispatcher _dispatcher;
 
@@ -17,12 +17,12 @@ namespace Akroma.WebApi.Controllers
         }
 
         [ProducesResponseType(typeof(IEnumerable<Price>), 200)]
-        [HttpGet, Route("prices")]
+        [HttpGet]
+        [Route("prices")]
         [ResponseCache(Duration = 600)]
         public async Task<IEnumerable<Price>> Get()
         {
             return await _dispatcher.DispatchQueryAsync(new GetPrice());
         }
-
     }
 }
