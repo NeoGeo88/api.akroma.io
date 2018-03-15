@@ -38,6 +38,7 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(AddressTransactions), 200)]
         [HttpGet]
         [Route("addresses/{address}/transactions")]
+        [ResponseCache(Duration = 30)]
         public async Task<AddressTransactions> GetTransactions(string address, string filter = "all", int page = 0)
         {
             return await _dispatcher.DispatchQueryAsync(new GetAddressTransactions(address, filter, page));

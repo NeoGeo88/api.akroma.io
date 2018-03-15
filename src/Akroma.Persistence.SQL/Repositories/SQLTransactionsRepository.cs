@@ -46,8 +46,6 @@ namespace Akroma.Persistence.SQL.Repositories
 
             var query = _context
                 .Transactions
-                .AsNoTracking()
-                .OrderByDescending(x => x.Timestamp)
                 .AsQueryable();
             
             switch (filter)
@@ -67,8 +65,10 @@ namespace Akroma.Persistence.SQL.Repositories
             var totalPages = (totalTransactions - 1) / perPage + 1;
 
             var transactions = await query
+                .OrderByDescending(x => x.Timestamp)
                 .Skip(20 * currentPage)
                 .Take(perPage)
+                .AsNoTracking()
                 .Select(x => x.ToTransaction())
                 .ToListAsync();
 
