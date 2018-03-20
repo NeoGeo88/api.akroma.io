@@ -42,6 +42,7 @@ namespace Akroma.WebApi
                 .Where(a => a.FullName.Contains("Domain"))
                 .ToArray()
             );
+            services.AddResponseCaching();
             services.AddCors();
             services.AddMvc();
 
