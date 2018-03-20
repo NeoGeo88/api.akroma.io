@@ -57,7 +57,11 @@ namespace Akroma.WebApi
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+#if DEBUG
             app.UseDeveloperExceptionPage();
+#endif
+
+            app.UseResponseCaching();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
