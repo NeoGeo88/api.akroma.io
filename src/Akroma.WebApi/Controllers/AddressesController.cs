@@ -23,7 +23,7 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(Address), 200)]
         [HttpGet]
         [Route("addresses/{address}")]
-        [ResponseCache(Duration = 30)]
+        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "address", "page" })]
         public async Task<Address> Get(string address, int page = 0)
         {
             return await _dispatcher.DispatchQueryAsync(new GetAddress(address, page));
@@ -38,7 +38,7 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(AddressTransactions), 200)]
         [HttpGet]
         [Route("addresses/{address}/transactions")]
-        [ResponseCache(Duration = 30)]
+        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "address", "filter", "page" })]
         public async Task<AddressTransactions> GetTransactions(string address, string filter = "all", int page = 0)
         {
             return await _dispatcher.DispatchQueryAsync(new GetAddressTransactions(address, filter, page));

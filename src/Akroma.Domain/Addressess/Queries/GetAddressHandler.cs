@@ -15,11 +15,17 @@ namespace Akroma.Domain.Addressess.Queries
         }
         public async Task<Address> HandleAsync(GetAddress query)
         {
+
+            //hash
+            //balance
+            //mined
+            //total transactions (in transactionsInitiatedCount?)
             var web3 = new Web3.Web3("https://rpc.akroma.io");
             var block = await web3.Eth.GetBalance(query.Address);
             
 
             var response = await _repository.GetAddressAsync(query.Address, query.Page);
+            
             response.Balance = block.Result;
             return response;
         }

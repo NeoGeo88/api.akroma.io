@@ -36,6 +36,7 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(void), 404)]
         [HttpGet]
         [Route("blocks/{number:int}")]
+        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "number" })]
         public async Task<Block> GetBlock(int number)
         {
             return await _dispatcher.DispatchQueryAsync(new GetBlockByNumber(number));
@@ -49,6 +50,7 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(void), 404)]
         [HttpGet]
         [Route("blocks/{hash}")]
+        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "hash" })]
         public async Task<Block> GetBlock(string hash)
         {
             return await _dispatcher.DispatchQueryAsync(new GetBlockByHash(hash));
