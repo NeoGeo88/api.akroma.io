@@ -7,5 +7,8 @@ namespace Akroma.Domain.Prices.Models
         public string Symbol { get; set; }
         public decimal Value { get; set; }
         public string Usd { get; set; }
+
+        public decimal UsdRaw { get; set; }
+        public decimal UsdDayAgoRaw { get; set; }
     }
 }

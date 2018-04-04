@@ -29,6 +29,7 @@ namespace Akroma.Domain.Prices.Queries
             }
 
             var usd = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.ask);
+            var usdDayAgoRaw = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.lastDayAgo);
 
             return new List<Price>
             {
@@ -38,7 +39,9 @@ namespace Akroma.Domain.Prices.Queries
                     Name = "Akroma",
                     Symbol = "AKA",
                     Value = decimal.Parse(akaPrice.ask),
-                    Usd = usd.ToString("C")
+                    Usd = usd.ToString("C"),
+                    UsdRaw = usd,
+                    UsdDayAgoRaw = usdDayAgoRaw
                 }
             };
         }
