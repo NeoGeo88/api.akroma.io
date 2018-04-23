@@ -16,13 +16,14 @@ namespace Akroma.Persistence.SQL.Repositories
         }
         public async Task<Price> GetPriceAsync(string symbol)
         {
-            return await _context
+            var current = await _context
                 .Prices
                 .AsNoTracking()
                 .Where(x => x.Symbol == symbol)
                 .OrderByDescending(x => x.Id)
                 .Select(x => x.ToPrice())
                 .FirstOrDefaultAsync();
+            return current ?? new Price();
         }
     }
 }

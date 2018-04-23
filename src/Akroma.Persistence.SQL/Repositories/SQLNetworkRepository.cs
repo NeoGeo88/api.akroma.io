@@ -18,12 +18,13 @@ namespace Akroma.Persistence.SQL.Repositories
 
         public async Task<Stats> GetNetworkAsync()
         {
-            return await _context
+            var current =  await _context
                 .Network
                 .AsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Select(x => x.ToViewModel())
                 .FirstOrDefaultAsync();
+            return current ?? new Stats();
         }
 
         public async Task<IEnumerable<Stats>> GetNetworkHistoryAsync()

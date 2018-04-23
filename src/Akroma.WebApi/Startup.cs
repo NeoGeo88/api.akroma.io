@@ -30,9 +30,8 @@ namespace Akroma.WebApi
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AkromaContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AkromaConnectionString"),
-                    x => x.MigrationsAssembly("Akroma.Persistence.SQL")));
+            var connectionString = Configuration.GetConnectionString("AkromaConnectionString");
+            services.AddDbContext<AkromaContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Akroma.Persistence.SQL")));
             services.AddTransient<IBlocksRepository, SQLBlocksRepository>();
             services.AddTransient<IAddressRepository, SQLAddressRepository>();
             services.AddTransient<ITransactionsRepository, SQLTransactionsRepository>();
