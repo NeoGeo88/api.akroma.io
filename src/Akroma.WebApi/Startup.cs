@@ -35,13 +35,6 @@ namespace Akroma.WebApi
             services.AddTransient<IAddressRepository, SQLAddressRepository>();
             services.AddTransient<ITransactionsRepository, SQLTransactionsRepository>();
 
-            services.AddCqrs(AppDomain
-                .CurrentDomain
-                .GetAssemblies()
-                .Where(a => a.FullName.StartsWith("Akroma"))
-                .Where(a => a.FullName.Contains("Domain"))
-                .ToArray()
-            );
             services.AddResponseCaching();
             services.AddCors();
             services.AddMvc();
