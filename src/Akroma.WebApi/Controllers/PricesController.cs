@@ -18,7 +18,6 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(Price), 200)]
         [HttpGet]
         [Route("prices")]
-        [ResponseCache(Duration = 600)]
         public async Task<Price> Get()
         {
             return await _dispatcher.DispatchQueryAsync(new GetPrice("AKA"));
