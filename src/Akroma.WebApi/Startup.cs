@@ -10,6 +10,8 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Brickweave.Cqrs.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Akroma.Domain.Blocks.Services;
+using Akroma.Domain.NetworkStats.Services;
+using Akroma.Domain.Prices.Services;
 using Akroma.Domain.Transactions.Services;
 using Akroma.Persistence.SQL;
 using Akroma.Persistence.SQL.Repositories;
@@ -34,6 +36,8 @@ namespace Akroma.WebApi
             services.AddTransient<IBlocksRepository, SQLBlocksRepository>();
             services.AddTransient<IAddressRepository, SQLAddressRepository>();
             services.AddTransient<ITransactionsRepository, SQLTransactionsRepository>();
+            services.AddTransient<INetworkRepository, SQLNetworkRepository>();
+            services.AddTransient<IPriceRepository, SQLPriceRepository>();
 
             services.AddCqrs(AppDomain
                 .CurrentDomain
