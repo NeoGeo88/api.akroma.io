@@ -11,9 +11,10 @@ using System;
 namespace Akroma.Persistence.SQL.Migrations
 {
     [DbContext(typeof(AkromaContext))]
-    partial class AkromaContextModelSnapshot : ModelSnapshot
+    [Migration("20180420150247_AddPriceTable")]
+    partial class AddPriceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,24 +63,6 @@ namespace Akroma.Persistence.SQL.Migrations
                     b.HasIndex("Miner");
 
                     b.ToTable("Blocks");
-                });
-
-            modelBuilder.Entity("Akroma.Persistence.SQL.Model.NetworkEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<string>("Difficulty");
-
-                    b.Property<string>("HashRate");
-
-                    b.Property<int>("Height");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Network");
                 });
 
             modelBuilder.Entity("Akroma.Persistence.SQL.Model.PriceEntity", b =>

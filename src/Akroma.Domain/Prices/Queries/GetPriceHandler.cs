@@ -1,49 +1,53 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Akroma.Domain.Prices.Models;
+using Akroma.Domain.Prices.Services;
 using Brickweave.Cqrs;
-using Newtonsoft.Json;
 
 namespace Akroma.Domain.Prices.Queries
 {
-    public class GetPriceHandler : IQueryHandler<GetPrice, IEnumerable<Price>>
+    public class GetPriceHandler : IQueryHandler<GetPrice, Price>
     {
-        private static readonly HttpClient HttpClient = new HttpClient();
+        private readonly IPriceRepository _priceRepository;
+        //private static readonly HttpClient HttpClient = new HttpClient();
 
-        public async Task<IEnumerable<Price>> HandleAsync(GetPrice query)
+        public GetPriceHandler(IPriceRepository priceRepository)
         {
-            var stocks = await HttpClient.GetStringAsync(new Uri("https://stocks.exchange/api2/ticker"));
-            var stocksPrices = JsonConvert.DeserializeObject<List<StocksPrice>>(stocks);
-            var akaPrice = stocksPrices.FirstOrDefault(x => x.market_name == "AKA_BTC");
+            _priceRepository = priceRepository;
+        }
 
-            var coinmarketCap = await HttpClient.GetStringAsync(new Uri("https://api.coinmarketcap.com/v1/ticker/bitcoin/"));
-            var bitcoinPrices = JsonConvert.DeserializeObject<List<Coinmarketcap>>(coinmarketCap);
-            var bitcoin = bitcoinPrices.FirstOrDefault();
+        public async Task<Price> HandleAsync(GetPrice query)
+        {
+            return await _priceRepository.GetPriceAsync(query.Symbol);
 
-            if (akaPrice == null || bitcoin == null)
-            {
-                return new List<Price>();
-            }
 
-            var usd = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.ask);
-            var usdDayAgoRaw = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.lastDayAgo);
+            //var stocks = await HttpClient.GetStringAsync(new Uri("https://stocks.exchange/api2/ticker"));
+            //var stocksPrices = JsonConvert.DeserializeObject<List<StocksPrice>>(stocks);
+            //var akaPrice = stocksPrices.FirstOrDefault(x => x.market_name == "AKA_BTC");
 
-            return new List<Price>
-            {
-                new Price
-                {
-                    Id = "akroma",
-                    Name = "Akroma",
-                    Symbol = "AKA",
-                    Value = decimal.Parse(akaPrice.ask),
-                    Usd = usd.ToString("C"),
-                    UsdRaw = usd,
-                    UsdDayAgoRaw = usdDayAgoRaw
-                }
-            };
+            //var coinmarketCap = await HttpClient.GetStringAsync(new Uri("https://api.coinmarketcap.com/v1/ticker/bitcoin/"));
+            //var bitcoinPrices = JsonConvert.DeserializeObject<List<Coinmarketcap>>(coinmarketCap);
+            //var bitcoin = bitcoinPrices.FirstOrDefault();
+
+            //if (akaPrice == null || bitcoin == null)
+            //{
+            //    return new List<Price>();
+            //}
+
+            //var usd = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.ask);
+            //var usdDayAgoRaw = decimal.Parse(bitcoin.price_usd) * decimal.Parse(akaPrice.lastDayAgo);
+
+            //return new List<Price>
+            //{
+            //    new Price
+            //    {
+            //        Name = "Akroma",
+            //        Symbol = "AKA",
+            //        Value = decimal.Parse(akaPrice.ask),
+            //        Usd = usd.ToString("C"),
+            //        UsdRaw = usd,
+            //        UsdDayAgoRaw = usdDayAgoRaw
+            //    }
+            //};
         }
     }
     public class StocksPrice

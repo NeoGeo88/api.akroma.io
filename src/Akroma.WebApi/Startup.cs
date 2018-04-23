@@ -35,13 +35,6 @@ namespace Akroma.WebApi
             services.AddTransient<IAddressRepository, SQLAddressRepository>();
             services.AddTransient<ITransactionsRepository, SQLTransactionsRepository>();
 
-            services.AddCqrs(AppDomain
-                .CurrentDomain
-                .GetAssemblies()
-                .Where(a => a.FullName.StartsWith("Akroma"))
-                .Where(a => a.FullName.Contains("Domain"))
-                .ToArray()
-            );
             services.AddResponseCaching();
             services.AddCors();
             services.AddMvc();
@@ -73,9 +66,6 @@ namespace Akroma.WebApi
             });
 
             app.UseStaticFiles();
-            //app.UseCors(
-            //    options => options.WithOrigins("http://example.com").AllowAnyMethod()
-            //);
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -83,7 +73,6 @@ namespace Akroma.WebApi
                 .AllowCredentials());
             app.UseMvc();
 
-            //TODO: move this to the deployment script (deploy.cmd on azure)
             //app.ApplicationServices.GetService<AkromaContext>().Database.Migrate();
         }
     }

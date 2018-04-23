@@ -13,6 +13,8 @@ namespace Akroma.Persistence.SQL
 
         public DbSet<TransactionEntity> Transactions { get; set; }
         public DbSet<BlockEntity> Blocks { get; set; }
+        public DbSet<PriceEntity> Prices { get; set; }
+        public DbSet<NetworkEntity> Network { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,11 @@ namespace Akroma.Persistence.SQL
             modelBuilder.Entity<BlockEntity>()
                 .HasIndex(x => x.Miner);
 
+            modelBuilder.Entity<PriceEntity>()
+                .HasIndex(x => x.CreatedAt);
+
+            modelBuilder.Entity<PriceEntity>()
+                .HasIndex(x => x.Symbol);
 
             base.OnModelCreating(modelBuilder);
         }

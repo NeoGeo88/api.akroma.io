@@ -1,28 +1,37 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Akroma.Domain.NetworkStats.Models;
+using Akroma.Domain.NetworkStats.Services;
 using Brickweave.Cqrs;
-using Newtonsoft.Json;
 
 namespace Akroma.Domain.NetworkStats.Queries
 {
     public class GetNetworkStatsHandler : IQueryHandler<GetNetworkStats, Stats>
     {
-        private static readonly HttpClient HttpClient = new HttpClient();
+        private readonly INetworkRepository _networkRepository;
+        //private static readonly HttpClient HttpClient = new HttpClient();
+
+        public GetNetworkStatsHandler(INetworkRepository networkRepository)
+        {
+            _networkRepository = networkRepository;
+        }
+
+
         public async Task<Stats> HandleAsync(GetNetworkStats query)
         {
-            var json = await HttpClient.GetStringAsync(new Uri("https://stats.akroma.io/akroma"));
-            
-            var akroma = JsonConvert.DeserializeObject<AkromaStats>(json);
-            return new Stats()
-            {
-                Difficulty = akroma.GetDifficulty(),
-                HashRate = akroma.GetHashRate(),
-                Height = akroma.GetHeight()
-            };
+            return await _networkRepository.GetNetworkAsync();
+
+
+            //var json = await HttpClient.GetStringAsync(new Uri("https://stats.akroma.io/akroma"));
+
+            //var akroma = JsonConvert.DeserializeObject<AkromaStats>(json);
+            //return new Stats()
+            //{
+            //    Difficulty = akroma.GetDifficulty(),
+            //    HashRate = akroma.GetHashRate(),
+            //    Height = akroma.GetHeight()
+            //};
         }
     }
     public class AkromaStats

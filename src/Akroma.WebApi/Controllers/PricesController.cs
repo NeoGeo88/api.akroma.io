@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Akroma.Domain.Prices.Models;
 using Akroma.Domain.Prices.Queries;
@@ -16,13 +15,13 @@ namespace Akroma.WebApi.Controllers
             _dispatcher = dispatcher;
         }
 
-        [ProducesResponseType(typeof(IEnumerable<Price>), 200)]
+        [ProducesResponseType(typeof(Price), 200)]
         [HttpGet]
         [Route("prices")]
         [ResponseCache(Duration = 600)]
-        public async Task<IEnumerable<Price>> Get()
+        public async Task<Price> Get()
         {
-            return await _dispatcher.DispatchQueryAsync(new GetPrice());
+            return await _dispatcher.DispatchQueryAsync(new GetPrice("AKA"));
         }
     }
 }
