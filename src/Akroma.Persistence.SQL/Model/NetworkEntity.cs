@@ -17,6 +17,7 @@ namespace Akroma.Persistence.SQL.Model
                 Height = Height,
                 Difficulty = Difficulty,
                 HashRate = HashRate,
+                CirculatingSupply = Height * 10, //close approx, does not take into account uncles.
                 CreatedAt = CreatedAt,
             };
         }
