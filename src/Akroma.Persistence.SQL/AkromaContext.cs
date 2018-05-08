@@ -15,6 +15,7 @@ namespace Akroma.Persistence.SQL
         public DbSet<BlockEntity> Blocks { get; set; }
         public DbSet<PriceEntity> Prices { get; set; }
         public DbSet<NetworkEntity> Network { get; set; }
+        public DbSet<TransactionHistoryEntity> TransactionHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -29,6 +29,14 @@ namespace Akroma.Persistence.SQL.Repositories
             return transactionDocuments.Select(t => t.ToTransaction());
         }
 
+        public async Task<IEnumerable<TransactionHistory>> GetTransactionHistoryAsync()
+        {
+            return await _context
+                .TransactionHistory
+                .Select(x => x.ToTransactionHistory())
+                .ToListAsync();
+        }
+
         public async Task<Transaction> GetTransactionAsync(string hash)
         {
             var transactionDocument = await _context
@@ -47,7 +55,7 @@ namespace Akroma.Persistence.SQL.Repositories
             var query = _context
                 .Transactions
                 .AsQueryable();
-            
+
             switch (filter)
             {
                 case "from":

@@ -40,5 +40,17 @@ namespace Akroma.WebApi.Controllers
         {
             return await _dispatcher.DispatchQueryAsync(new GetTransaction(hash));
         }
+
+        /// <summary>
+        ///     List transaction history
+        /// </summary>
+        [ProducesResponseType(typeof(IEnumerable<TransactionHistory>), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [HttpGet]
+        [Route("transactions/history")]
+        public async Task<IEnumerable<TransactionHistory>> GetHistory()
+        {
+            return await _dispatcher.DispatchQueryAsync(new GetTransactionHistory());
+        }
     }
 }

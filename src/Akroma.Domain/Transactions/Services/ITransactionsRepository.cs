@@ -8,6 +8,7 @@ namespace Akroma.Domain.Transactions.Services
     public interface ITransactionsRepository
     {
         Task<IEnumerable<Transaction>> GetTransactionsAsync(int limit);
+        Task<IEnumerable<TransactionHistory>> GetTransactionHistoryAsync();
         Task<Transaction> GetTransactionAsync(string hash);
         Task<AddressTransactions> GetAddressTransactions(string address, string filter, int currentPage);
     }

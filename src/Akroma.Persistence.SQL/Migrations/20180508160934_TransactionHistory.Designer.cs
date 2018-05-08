@@ -11,9 +11,10 @@ using System;
 namespace Akroma.Persistence.SQL.Migrations
 {
     [DbContext(typeof(AkromaContext))]
-    partial class AkromaContextModelSnapshot : ModelSnapshot
+    [Migration("20180508160934_TransactionHistory")]
+    partial class TransactionHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
