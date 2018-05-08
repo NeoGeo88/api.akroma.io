@@ -33,6 +33,8 @@ namespace Akroma.Persistence.SQL.Repositories
         {
             return await _context
                 .TransactionHistory
+                .OrderByDescending(x => x.Date)
+                .Take(200)
                 .Select(x => x.ToTransactionHistory())
                 .ToListAsync();
         }
