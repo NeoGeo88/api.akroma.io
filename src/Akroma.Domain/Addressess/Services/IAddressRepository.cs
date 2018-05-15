@@ -5,7 +5,13 @@ namespace Akroma.Domain.Addressess.Services
 {
     public interface IAddressRepository
     {
-        Task<Address> GetAddressAsync(string address, int page = 0);
+        Task<int> GetAddressTransactionCountAsync(string address);
+
+        Task<int> GetAddressMinedAsync(string address);
+
+        Task<AddressTo> GetAddressToAsync(string address);
+
+        Task<AddressFrom> GetAddressFromAsync(string address);
     }
 
 

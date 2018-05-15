@@ -19,14 +19,13 @@ namespace Akroma.WebApi.Controllers
         ///     List transactions
         /// </summary>
         /// <param name="address">The address to return [0x]ADDRESS</param>
-        /// <param name="page"></param>
         [ProducesResponseType(typeof(Address), 200)]
         [HttpGet]
         [Route("addresses/{address}")]
-        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "address", "page" })]
-        public async Task<Address> Get(string address, int page = 0)
+        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "address"})]
+        public async Task<Address> Get(string address)
         {
-            return await _dispatcher.DispatchQueryAsync(new GetAddress(address, page));
+            return await _dispatcher.DispatchQueryAsync(new GetAddress(address));
         }
 
         /// <summary>

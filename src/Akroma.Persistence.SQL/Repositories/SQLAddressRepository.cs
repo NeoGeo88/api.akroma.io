@@ -14,22 +14,42 @@ namespace Akroma.Persistence.SQL.Repositories
         {
             _context = context;
         }
-        public async Task<Address> GetAddressAsync(string address, int page = 0)
+        public async Task<int> GetAddressTransactionCountAsync(string address)
         {
-            var transacionCount = await _context
+            return await _context
                 .Transactions
                 .AsNoTracking()
                 .Where(x => x.From == address || x.To == address)
                 .CountAsync();
+        }
 
-            var mined = await _context
+        public async Task<int> GetAddressMinedAsync(string address)
+        {
+            return await _context
                 .Blocks
                 .AsNoTracking()
                 .Where(x => x.Miner == address)
                 .CountAsync();
+        }
 
-            var adddress = new Address(address, "", mined, transacionCount);
-            return adddress;
+        public async Task<AddressTo> GetAddressToAsync(string address)
+        {
+            return await _context
+                .AddressTo
+                .AsNoTracking()
+                .Where(x => x.To == address)
+                .Select(x => x.ToAddressTo())
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<AddressFrom> GetAddressFromAsync(string address)
+        {
+            return await _context
+                .AddressFrom
+                .AsNoTracking()
+                .Where(x => x.From == address)
+                .Select(x=>x.ToAddressFrom())
+                .FirstOrDefaultAsync();
         }
     }
 }
