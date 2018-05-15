@@ -16,9 +16,15 @@ namespace Akroma.Persistence.SQL
         public DbSet<PriceEntity> Prices { get; set; }
         public DbSet<NetworkEntity> Network { get; set; }
         public DbSet<TransactionHistoryEntity> TransactionHistory { get; set; }
+        public DbQuery<AddressToEntity> AddressTo { get; set; }
+        public DbQuery<AddressFromEntity> AddressFrom { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Query<AddressToEntity>().ToView("AddressTo");
+            modelBuilder.Query<AddressFromEntity>().ToView("AddressFrom");
+
             modelBuilder.Entity<TransactionEntity>()
                 .Property(x => x.Hash)
                 .HasMaxLength(200);
