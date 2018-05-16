@@ -39,17 +39,17 @@ namespace Akroma.Persistence.SQL.Repositories
                 .AsNoTracking()
                 .Where(x => x.To == address)
                 .Select(x => x.ToAddressTo())
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? new AddressTo(address, 0, 0);
         }
 
         public async Task<AddressFrom> GetAddressFromAsync(string address)
         {
             return await _context
-                .AddressFrom
-                .AsNoTracking()
-                .Where(x => x.From == address)
-                .Select(x=>x.ToAddressFrom())
-                .FirstOrDefaultAsync();
+                       .AddressFrom
+                       .AsNoTracking()
+                       .Where(x => x.From == address)
+                       .Select(x => x.ToAddressFrom())
+                       .FirstOrDefaultAsync() ?? new AddressFrom(address, 0, 0);
         }
     }
 }
