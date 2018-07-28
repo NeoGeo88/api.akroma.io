@@ -3,7 +3,7 @@ namespace Akroma.Domain.Addressess.Model
     public class Address
     {
         public Address(string hash,
-            string balance,
+            decimal balance,
             int mined,
             int totalTransaction,
             long sentTransactions,
@@ -27,7 +27,7 @@ namespace Akroma.Domain.Addressess.Model
         public long ReceivedTransactions { get; }
         public decimal ReceivedTotal { get; }
         public string Hash { get; }
-        public string Balance { get; set; } //set in the query handler (does not come from db)
+        public decimal Balance { get; set; } //set in the query handler (does not come from db)
         public int Mined { get; }
       
     }

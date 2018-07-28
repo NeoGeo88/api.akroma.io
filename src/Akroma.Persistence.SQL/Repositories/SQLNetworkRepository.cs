@@ -23,8 +23,15 @@ namespace Akroma.Persistence.SQL.Repositories
                 .AsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Select(x => x.ToViewModel())
-                .FirstOrDefaultAsync();
-            return current ?? new Stats();
+                .FirstAsync();
+            return current;
+        }
+
+        public async Task<Supply> GetSupplyAsync()
+        {
+            var network = await GetNetworkAsync();
+            return new Supply(network.CirculatingSupply);
+            
         }
 
         public async Task<IEnumerable<Stats>> GetNetworkHistoryAsync()

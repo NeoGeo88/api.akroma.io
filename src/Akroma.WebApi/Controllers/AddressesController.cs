@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Akroma.Domain.Addressess.Model;
 using Akroma.Domain.Addressess.Queries;
@@ -41,6 +42,19 @@ namespace Akroma.WebApi.Controllers
         public async Task<AddressTransactions> GetTransactions(string address, string filter = "all", int page = 0)
         {
             return await _dispatcher.DispatchQueryAsync(new GetAddressTransactions(address, filter, page));
+        }
+
+
+        /// <summary>
+        ///     List addresses order by balance, requested by coinmarketcap.com
+        /// </summary>
+        [ProducesResponseType(typeof(IEnumerable<Address>), 200)]
+        [HttpGet]
+        [Route("addresses")]
+        [ResponseCache(Duration = 6000)]
+        public async Task<IEnumerable<Address>> GetAddresses()
+        {
+            return await _dispatcher.DispatchQueryAsync(new GetAddresses());
         }
     }
 }

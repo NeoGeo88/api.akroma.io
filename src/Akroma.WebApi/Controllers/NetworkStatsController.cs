@@ -18,9 +18,23 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(Stats), 200)]
         [HttpGet]
         [Route("network")]
+        [ResponseCache(Duration = 60)]
         public async Task<Stats> Get()
         {
             return await _dispatcher.DispatchQueryAsync(new GetNetworkStats());
+        }
+
+
+        /// <summary>
+        ///     Current supply, requested by coinmarketcap.com
+        /// </summary>
+        [ProducesResponseType(typeof(Supply), 200)]
+        [HttpGet]
+        [Route("network/supply")]
+        [ResponseCache(Duration = 60)]
+        public async Task<Supply> Supply()
+        {
+            return await _dispatcher.DispatchQueryAsync(new GetSupply());
         }
     }
 }
