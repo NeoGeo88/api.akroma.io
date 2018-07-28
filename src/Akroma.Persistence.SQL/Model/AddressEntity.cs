@@ -11,15 +11,15 @@ namespace Akroma.Persistence.SQL.Model
 
         [Column(TypeName = "decimal(18,6)")]
         public decimal ToValue { get; set; }
-        public int ToCount { get; set; }
+        public long ToCount { get; set; }
 
         [Column(TypeName = "decimal(18,6)")]
         public decimal FromValue { get; set; }
-        public int FromCount { get; set; }
+        public long FromCount { get; set; }
 
         [Column(TypeName = "decimal(18,6)")]
         public decimal TotalValue { get; set; }
-        public int TotalCount { get; set; }
+        public long TotalCount { get; set; }
 
         public Address ToAddress()
         {

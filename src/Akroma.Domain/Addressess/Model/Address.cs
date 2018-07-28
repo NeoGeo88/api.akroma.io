@@ -5,7 +5,7 @@ namespace Akroma.Domain.Addressess.Model
         public Address(string hash,
             decimal balance,
             int mined,
-            int totalTransaction,
+            long totalTransaction,
             long sentTransactions,
             decimal sentTotal,
             long receivedTransactions,
@@ -21,7 +21,7 @@ namespace Akroma.Domain.Addressess.Model
             ReceivedTotal = receivedTotal;
         }
 
-        public int TransactionsInitiatedCount { get; }
+        public long TransactionsInitiatedCount { get; }
         public long SentTransactions { get; }
         public decimal SentTotal { get; }
         public long ReceivedTransactions { get; }
