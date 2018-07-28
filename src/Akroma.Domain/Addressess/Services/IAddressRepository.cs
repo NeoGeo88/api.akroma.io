@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Akroma.Domain.Addressess.Model;
 
@@ -12,6 +13,7 @@ namespace Akroma.Domain.Addressess.Services
         Task<AddressTo> GetAddressToAsync(string address);
 
         Task<AddressFrom> GetAddressFromAsync(string address);
+        Task<IEnumerable<Address>> GetAddressesAsync();
     }
 
 

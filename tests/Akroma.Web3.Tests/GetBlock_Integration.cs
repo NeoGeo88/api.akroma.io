@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Akroma.Web3.Model.HexTypes;
 using Xunit;
@@ -50,7 +51,7 @@ namespace Akroma.Web3.Tests
             //https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbynumber
             var web3 = new Web3();
             var block = await web3.Eth.GetBalance("0xbe1f96904efc9f64127b437c924e7969aa63099c");
-            _console.WriteLine(block?.Result ?? "no response from geth");
+            _console.WriteLine(block?.Result.ToString(CultureInfo.InvariantCulture));
         }
 
     }

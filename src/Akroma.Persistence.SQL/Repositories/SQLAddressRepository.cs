@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akroma.Domain.Addressess.Model;
@@ -50,6 +51,15 @@ namespace Akroma.Persistence.SQL.Repositories
                        .Where(x => x.From == address)
                        .Select(x => x.ToAddressFrom())
                        .FirstOrDefaultAsync() ?? new AddressFrom(address, 0, 0);
+        }
+
+        public async Task<IEnumerable<Address>> GetAddressesAsync()
+        {
+            return await _context
+                       .Addresses
+                       .AsNoTracking()
+                       .Select(x => x.ToAddress())
+                       .ToListAsync();
         }
     }
 }

@@ -67,11 +67,11 @@ namespace Akroma.Web3
         /// </summary>
         /// <param name="address"></param>
         /// <returns>amount in eth/aka</returns>
-        public async Task<GethResponse<string>> GetBalance(string address)
+        public async Task<GethResponse<decimal>> GetBalance(string address)
         {
             var response = await _client.PostAsync<string>(Web3Methods.EthGetBalance, address, "latest");
-            response.Result = UnitConversion.Convert.FromWei(new HexBigInteger(response?.Result)).ToString(CultureInfo.InvariantCulture);
-            return response;
+            var balance = UnitConversion.Convert.FromWei(new HexBigInteger(response?.Result));
+            return new GethResponse<decimal>(){ Result =  balance };
         }
 
 

@@ -18,12 +18,14 @@ namespace Akroma.Persistence.SQL
         public DbSet<TransactionHistoryEntity> TransactionHistory { get; set; }
         public DbQuery<AddressToEntity> AddressTo { get; set; }
         public DbQuery<AddressFromEntity> AddressFrom { get; set; }
+        public DbQuery<AddressEntity> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Query<AddressToEntity>().ToView("AddressTo");
             modelBuilder.Query<AddressFromEntity>().ToView("AddressFrom");
+            modelBuilder.Query<AddressEntity>().ToView("Address");
 
             modelBuilder.Entity<TransactionEntity>()
                 .Property(x => x.Hash)
