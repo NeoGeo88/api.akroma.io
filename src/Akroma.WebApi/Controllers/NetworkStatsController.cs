@@ -39,7 +39,7 @@ namespace Akroma.WebApi.Controllers
 
 
         /// <summary>
-        ///     Current supply, value only, requested by coinmarketcap.com
+        ///     Current supply, value only as double, requested by coinmarketcap.com
         /// </summary>
         [ProducesResponseType(typeof(double), 200)]
         [HttpGet]
