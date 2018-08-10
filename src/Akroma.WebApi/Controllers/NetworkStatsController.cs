@@ -41,14 +41,14 @@ namespace Akroma.WebApi.Controllers
         /// <summary>
         ///     Current supply, value only, requested by coinmarketcap.com
         /// </summary>
-        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(double), 200)]
         [HttpGet]
         [Route("network/supply/value")]
         [ResponseCache(Duration = 60)]
-        public async Task<string> SupplyValue()
+        public async Task<double> SupplyValue()
         {
             var supply = await _dispatcher.DispatchQueryAsync(new GetSupply());
-            return "{" + supply.Circulating + "}";
+            return supply.Circulating;
 
         }
     }
