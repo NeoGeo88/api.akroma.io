@@ -52,7 +52,7 @@ namespace Akroma.Persistence.SQL.Repositories
 
         public async Task<AddressTransactions> GetAddressTransactions(string address, string filter, int currentPage)
         {
-            const int perPage = 20;
+            const int perPage = 50;
 
             var query = _context
                 .Transactions
@@ -76,7 +76,7 @@ namespace Akroma.Persistence.SQL.Repositories
 
             var transactions = await query
                 .OrderByDescending(x => x.Timestamp)
-                .Skip(20 * currentPage)
+                .Skip(perPage * currentPage)
                 .Take(perPage)
                 .AsNoTracking()
                 .Select(x => x.ToTransaction())
