@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Akroma.Domain.Prices.Models;
 using Akroma.Domain.Prices.Queries;
@@ -18,6 +19,7 @@ namespace Akroma.WebApi.Controllers
         [ProducesResponseType(typeof(Price), 200)]
         [HttpGet]
         [Route("prices")]
+        [Obsolete("see https://akroma.io/docs")]
         public async Task<Price> Get()
         {
             return await _dispatcher.DispatchQueryAsync(new GetPrice("AKA"));

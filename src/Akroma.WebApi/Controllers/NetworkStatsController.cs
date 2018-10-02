@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Akroma.Domain.NetworkStats.Models;
 using Akroma.Domain.NetworkStats.Queries;
@@ -19,6 +20,7 @@ namespace Akroma.WebApi.Controllers
         [HttpGet]
         [Route("network")]
         [ResponseCache(Duration = 60)]
+        [Obsolete("see https://akroma.io/docs")]
         public async Task<Stats> Get()
         {
             return await _dispatcher.DispatchQueryAsync(new GetNetworkStats());
@@ -26,12 +28,13 @@ namespace Akroma.WebApi.Controllers
 
 
         /// <summary>
-        ///     Current supply, requested by coinmarketcap.com
+        ///     Warning: Deprecated (see https://akroma.io/docs) - Current supply, requested by coinmarketcap.com
         /// </summary>
         [ProducesResponseType(typeof(Supply), 200)]
         [HttpGet]
         [Route("network/supply")]
         [ResponseCache(Duration = 60)]
+        [Obsolete("see https://akroma.io/docs")]
         public async Task<Supply> Supply()
         {
             return await _dispatcher.DispatchQueryAsync(new GetSupply());
@@ -39,12 +42,13 @@ namespace Akroma.WebApi.Controllers
 
 
         /// <summary>
-        ///     Current supply, value only as double, requested by coinmarketcap.com
+        ///     Warning: Deprecated (see https://akroma.io/docs) - Current supply, value only as double, requested by coinmarketcap.com
         /// </summary>
         [ProducesResponseType(typeof(double), 200)]
         [HttpGet]
         [Route("network/supply/value")]
         [ResponseCache(Duration = 60)]
+        [Obsolete("see https://akroma.io/docs")]
         public async Task<double> SupplyValue()
         {
             var supply = await _dispatcher.DispatchQueryAsync(new GetSupply());
