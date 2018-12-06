@@ -15,11 +15,12 @@ namespace Akroma.Import.Tests
             Trace.Listeners.Add(new TestTraceListener(console));
         }
 
-        [Fact(Skip = "used for migration")]
+        // [Fact(Skip = "used for migration")]
+        [Fact]
         public async Task MigrateDatabase()
         {
             var builder = new DbContextOptionsBuilder<AkromaContext>();
-            var connection = Environment.GetEnvironmentVariable("AkromaConnectionString") ?? "";
+            var connection = Environment.GetEnvironmentVariable("Database__ExplorerConnectionString") ?? "";
             if (string.IsNullOrEmpty(connection))
             {
                 throw new Exception("unable to get connection string from env var");
@@ -27,7 +28,7 @@ namespace Akroma.Import.Tests
             
             builder.UseSqlServer(connection);
             var akromaContext = new AkromaContext(builder.Options);
-            await akromaContext.Database.EnsureDeletedAsync();
+            // await akromaContext.Database.EnsureDeletedAsync();
             await akromaContext.Database.MigrateAsync();
             //var service = new ImportService(akromaContext);
             //await service.Execute();

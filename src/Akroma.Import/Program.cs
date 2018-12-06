@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Akroma.Persistence.SQL;
+using Microsoft.EntityFrameworkCore;
 
 namespace Akroma.Import
 {
@@ -16,7 +17,7 @@ namespace Akroma.Import
             
             var timer = new System.Timers.Timer()
             {
-                Interval = 10000
+                Interval = 20000
             };
             timer.Elapsed += async (sender, eventArgs) => await LoadBlocks();
             timer.Start();
@@ -37,6 +38,12 @@ namespace Akroma.Import
             _loading = true;
 
             var contextFactory = new AkromaContextFactory();
+
+            //using (var context = contextFactory.Create())
+            //{
+            //    await context.Database.MigrateAsync();
+            //}
+
             var import = new ImportService(contextFactory);
             await import.Execute();
 

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Akroma.Persistence.SQL;
 using Akroma.Persistence.SQL.Model;
@@ -12,12 +13,12 @@ namespace Akroma.Import
     public class ImportService
     {
         private readonly AkromaContextFactory _contextFactory;
-        private readonly Web3.Web3 _web3;
+        private Web3.Web3 _web3;
 
         public ImportService(AkromaContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _web3 = new Web3.Web3();
+           
         }
 
         public async Task Execute()
@@ -27,8 +28,11 @@ namespace Akroma.Import
 
         private async Task GetBlock(string blockNumber = "latest")
         {
+            BigInteger nextBlock;
             using (var context = _contextFactory.Create())
             {
+                _web3 = new Web3.Web3();
+
                 Console.WriteLine($"Importing block number: {blockNumber}");
                 var block = await _web3.Eth.GetBlockByNumberWithTransactions(blockNumber);
                 if (block?.Result == null)
@@ -44,11 +48,15 @@ namespace Akroma.Import
                 }
 
                 await SaveTransactions(context, block.Result);
-                var nextBlock = block.Result.Number.Value - 1;
+                nextBlock = block.Result.Number.Value - 1;
                 if (nextBlock <= 0)
                 {
                     return;
                 }
+            }
+
+            if (nextBlock > 0)
+            {
                 await GetBlock(nextBlock.ToString());
             }
         }
